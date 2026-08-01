@@ -119,12 +119,7 @@ else:
                 plt.tight_layout()
                 st.pyplot(fig)
                 
-                base_val = explainer.expected_value
-                if isinstance(base_val, np.ndarray): base_val = base_val[0]
-                diff = prediction - base_val
-                direction = "added" if diff > 0 else "reduced"
-                
-                st.info(f"⬆️ **ETA Explanation:** Under normal conditions, an average delivery takes **{int(base_val)} minutes**. Based on the order details you provided, the AI has {direction} **{abs(int(diff))} minutes** to the final estimate. Red bars show factors that increased the time, and blue bars decreased it.")
+                st.info("⬆️ **How to read this chart:** The base time is the average delivery time. Red bars show factors that *increased* the ETA (e.g., Jam traffic), and blue bars show factors that *decreased* it (e.g., Short distance).")
 
     # --- TAB 2: GEOSPATIAL MAP ---
     with tab2:
