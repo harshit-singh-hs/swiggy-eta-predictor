@@ -65,7 +65,7 @@ else:
                 weather = st.selectbox("Weather Condition", ['Sunny', 'Stormy', 'Sandstorms', 'Windy', 'Fog', 'Cloudy'])
                 traffic = st.selectbox("Traffic Density", ['Low', 'Medium', 'High', 'Jam'])
                 vehicle_type = st.selectbox("Type of Vehicle", ['motorcycle', 'scooter', 'electric_scooter', 'bicycle'])
-                vehicle_condition = st.selectbox("Vehicle Condition (0-2)", [0, 1, 2], index=2)
+                vehicle_condition = st.selectbox("Vehicle Condition (0=Poor, 1=Average, 2=Excellent)", [0, 1, 2], index=2)
                 multiple_deliveries = st.selectbox("Multiple Deliveries (Batched)", [0, 1, 2, 3], index=0)
                 festival = st.selectbox("Festival Day?", ['No', 'Yes'])
                 city_type = st.selectbox("City Type", ['Urban', 'Metropolitian', 'Semi-Urban'])
