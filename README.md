@@ -22,18 +22,23 @@ Input live order details and instantly get the predicted ETA. More importantly, 
 * **Red Bars:** Factors that *increased* the ETA (e.g., Heavy Traffic, Rain).
 * **Blue Bars:** Factors that *decreased* the ETA (e.g., Short Distance, High Driver Rating).
 
-![Predict & Explain SHAP Plot](assets/predict.png)  
+<img width="1919" height="965" alt="image" src="https://github.com/user-attachments/assets/8cb9dfd8-068f-4776-a96f-8902278d754b" />
+<img width="1918" height="896" alt="image" src="https://github.com/user-attachments/assets/a9c8d32e-ad06-4771-b2b7-bce8fceeeda7" />
+
+
 *(Note the red and blue SHAP bars showing exactly how the model calculates the final minutes!)*
 
 ### 2. Geospatial Delay Hotspots Map
 An interactive map (built with **Folium**) that visualizes the exact GPS coordinates of historical delivery bottlenecks. It filters out normal deliveries and highlights zones where orders took **more than 40 minutes**.
 
-![Folium Heatmap](assets/heatmap.png)
+<img width="1918" height="973" alt="image" src="https://github.com/user-attachments/assets/f7ecebf7-1e3c-4b9c-80d7-94f40d7dbdfd" />
+
 
 ### 3. MLOps Metrics
 Proves the model's robustness by displaying live metrics (`RMSE`, `MAE`, `R2`) generated locally via **MLflow** during the training pipeline.
 
-![MLflow Metrics](assets/metrics.png)
+<img width="1918" height="899" alt="image" src="https://github.com/user-attachments/assets/f931d71f-332b-4850-9dfa-2b9e1eac0c96" />
+
 
 ---
 
