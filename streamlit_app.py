@@ -44,7 +44,7 @@ def load_assets():
 preprocessor, model, shap_model, metrics, raw_data = load_assets()
 
 # --- App Layout ---
-st.title("🍔 Swiggy ETA Predictor (MLOps Edition)")
+st.title("🍔 Swiggy ETA Predictor")
 st.markdown("Advanced Machine Learning project featuring **Explainable AI (SHAP)**, **Geospatial Mapping**, and **Ensemble Modeling**.")
 
 if model is None:

@@ -1,4 +1,4 @@
-# 🍔 Swiggy ETA Predictor (Advanced MLOps Edition)
+# 🍔 Swiggy ETA Predictor
 
 Welcome to the **Swiggy ETA Predictor**, a senior-level Data Science and Machine Learning project designed to predict the Estimated Time of Arrival (ETA) for food deliveries using a real-world logistics dataset. 
 
