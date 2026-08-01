@@ -7,7 +7,7 @@ import os
 import matplotlib.pyplot as plt
 import shap
 import folium
-from streamlit_folium import st_folium
+import streamlit.components.v1 as components
 from folium.plugins import HeatMap
 
 # --- Page Configuration ---
@@ -119,7 +119,12 @@ else:
                 plt.tight_layout()
                 st.pyplot(fig)
                 
-                st.info("⬆️ **How to read this chart:** The base time is the average delivery time. Red bars show factors that *increased* the ETA (e.g., Jam traffic), and blue bars show factors that *decreased* it (e.g., Short distance).")
+                base_val = explainer.expected_value
+                if isinstance(base_val, np.ndarray): base_val = base_val[0]
+                diff = prediction - base_val
+                direction = "added" if diff > 0 else "reduced"
+                
+                st.info(f"⬆️ **ETA Explanation:** Under normal conditions, an average delivery takes **{int(base_val)} minutes**. Based on the order details you provided, the AI has {direction} **{abs(int(diff))} minutes** to the final estimate. Red bars show factors that increased the time, and blue bars decreased it.")
 
     # --- TAB 2: GEOSPATIAL MAP ---
     with tab2:
@@ -127,23 +132,27 @@ else:
         st.markdown("This heatmap highlights areas where deliveries historically took **more than 40 minutes**. It helps logistics teams identify bottleneck zones.")
         
         # Clean data slightly for map (taking a sample for performance)
-        map_data = raw_data[['Delivery_location_latitude', 'Delivery_location_longitude', 'Time_taken(min)']].dropna().head(10000)
+        map_data = raw_data[['Delivery_location_latitude', 'Delivery_location_longitude', 'Time_taken(min)']].dropna()
         map_data['Time_taken(min)'] = map_data['Time_taken(min)'].astype(str).str.replace('(min) ', '', regex=False).astype(float)
         
-        delayed_orders = map_data[map_data['Time_taken(min)'] > 40]
+        delayed_orders = map_data[
+            (map_data['Time_taken(min)'] > 40) & 
+            (map_data['Delivery_location_latitude'] > 0) & 
+            (map_data['Delivery_location_longitude'] > 0)
+        ].head(5000)
         
         if not delayed_orders.empty:
             # Center map around average coordinates
             m = folium.Map(location=[delayed_orders['Delivery_location_latitude'].mean(), 
                                      delayed_orders['Delivery_location_longitude'].mean()], 
-                           zoom_start=11)
+                           zoom_start=11, tiles="CartoDB dark_matter")
             
             # Add Heatmap
             heat_data = [[row['Delivery_location_latitude'], row['Delivery_location_longitude']] for index, row in delayed_orders.iterrows()]
             HeatMap(heat_data, radius=15).add_to(m)
             
-            # Display in Streamlit
-            st_folium(m, width=1000, height=500)
+            # Display in Streamlit bypassing st_folium bug
+            components.html(m._repr_html_(), height=500)
         else:
             st.warning("Could not generate map data.")
 
